@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Industrial Cyber-Arena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<script>try{var m=location.search.match(/theme=(dark|light)/);if(m)localStorage.setItem("ica_theme",m[1]);var t=localStorage.getItem("ica_theme");if(t==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+</head>
+<body>
+<div id="app">
+
+  <header class="top">
+    <div class="trow">
+      <span class="spacer"></span>
+      <a class="site" href="#/home">Industrial Cyber-Arena</a>
+      <div class="hact">
+        <button class="hbtn guide" id="guideBtn" title="Take a guided tour of the whole prototype">Guide me</button>
+        <button class="hbtn theme" id="themeBtn" title="Switch light / dark theme" aria-label="Switch theme">
+          <svg class="ic-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+          <svg class="ic-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav id="nav">
+      <a data-v="home" href="#/home">Overview</a>
+      <a data-v="investigate" href="#/investigate">Investigate</a>
+      <a data-v="report" href="#/report">Report</a>
+      <a data-v="compare" href="#/compare">Compare</a>
+      <a data-v="red" href="#/red">Red Agent</a>
+      <a data-v="gateway" href="#/gateway">Gateway</a>
+      <a data-v="eval" href="#/eval">Evaluation</a>
+    </nav>
+    <div class="hstat" hidden><span id="runState"><i class="sq"></i>Run: <b>idle</b></span><span id="clock">--:--:--</span></div>
+  </header>
+
+  <main id="main">
+
+    <!-- ───────────── OVERVIEW -->
+    <section id="v-home" class="view">
+      <div class="page wide">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Sandboxed simulation · nothing real is touched</div>
+            <h1>Alerts are not answers.</h1>
+            <p class="lead">Security tools in factories and power plants raise alarms, but a person still has to work out whether each one is real. Industrial Cyber-Arena lets a team of AI agents do that investigation, and one agent's only job is to <b>doubt the others</b>.</p>
+            <div class="cta-row">
+              <button class="primary big" data-go="investigate">Start an investigation</button>
+              <button class="big" id="heroCompare">Watch the Critic fix a false alarm</button>
+            </div>
+          </div>
+          <div class="casefile">
+            <div class="cf-h">Example case · PLC-02 parameter changed</div>
+            <div class="cf-r"><span class="tag" style="--c:#c8102e">Alert</span><span>PLC-02 configuration changed (speed limit 1200 → 1300).</span></div>
+            <div class="cf-r"><span class="tag" style="--c:#1e66c1">Blue</span><span>Privilege change, then a PLC change. <b>Attack likely.</b> Confidence 0.63.</span></div>
+            <div class="cf-r"><span class="tag" style="--c:#d9730d">Critic</span><span>Could this be planned maintenance? Checking the schedule and the user's rights.</span></div>
+            <div class="cf-r"><span class="tag" style="--c:#2e7d4f">Verdict</span><span><b>False alarm.</b> Ticket CHG-1042, authorised engineer. Confidence 0.13.</span></div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <h2>How an investigation works</h2>
+          <div class="steps">
+            <div><i>1</i><b>An alert fires</b><p>A detection tool flags something unusual in the plant.</p></div>
+            <div><i>2</i><b>Blue investigates</b><p>It reads the logs through a controlled gateway and scores what looks suspicious.</p></div>
+            <div><i>3</i><b>Critic challenges</b><p>It argues the other side and demands proof, such as a ticket or a valid signature.</p></div>
+            <div><i>4</i><b>Forensics reconstructs</b><p>It builds the timeline and an evidence graph. Every link cites evidence.</p></div>
+            <div><i>5</i><b>A human decides</b><p>The analyst approves the finding or sends it back. The system never has the last word.</p></div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <h2>The agent team</h2>
+          <div class="agents">
+            <div><span class="sq" style="--c:#5b6470">O</span><b>Orchestrator</b><p>Plans the case and delegates the work.</p><em>No tool access</em></div>
+            <div><span class="sq" style="--c:#1e66c1">B</span><b>Blue</b><p>The analyst. Reads logs, forms the first verdict.</p><em>Read-only tools</em></div>
+            <div><span class="sq" style="--c:#d9730d">C</span><b>Critic</b><p>Challenges the verdict and asks for evidence.</p><em>No tool access</em></div>
+            <div><span class="sq" style="--c:#6b4c9a">F</span><b>Forensics</b><p>Rebuilds the timeline and attack path.</p><em>Read-only tools</em></div>
+            <div><span class="sq" style="--c:#c8102e">R</span><b>Red</b><p>Checks the plant for weak settings, without breaking anything.</p><em>Read-only tools</em></div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <h2>Explore the prototype</h2>
+          <div class="tiles">
+            <a class="tile" href="#/investigate"><b>Investigate</b><p>Pick a case and watch the agents work on a live plant map.</p><span>Open →</span></a>
+            <a class="tile" href="#/report"><b>Report</b><p>Verdict, attack path, MITRE techniques, evidence, timeline and the analyst decision.</p><span>Open →</span></a>
+            <a class="tile" href="#/compare"><b>Compare</b><p>The same case with the Critic off and on, side by side.</p><span>Open →</span></a>
+            <a class="tile" href="#/red"><b>Red Agent</b><p>A read-only security assessment that lists weak settings in the plant.</p><span>Open →</span></a>
+            <a class="tile" href="#/gateway"><b>Gateway</b><p>Who may use which tool, and a log of every call, allowed or denied.</p><span>Open →</span></a>
+            <a class="tile" href="#/eval"><b>Evaluation</b><p>All five cases under three systems: rules, agents without Critic, full system.</p><span>Open →</span></a>
+          </div>
+        </div>
+
+        <div class="sec two">
+          <div>
+            <h2>What is real</h2>
+            <ul><li>The agent pipeline and the Critic's challenge-and-verify loop</li><li>The Tool Gateway: allow-lists, scope checks and audit log</li><li>The evidence store and the confidence model</li><li>The evaluation harness</li></ul>
+          </div>
+          <div>
+            <h2>What is simulated</h2>
+            <ul><li>The plant and every event: five scripted cases, no real network traffic</li><li>The reasoning is rule-based so each demo is repeatable; an LLM can optionally narrate</li><li>Evidence weights are hand-set, so results show the mechanism, not real-world accuracy</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── INVESTIGATE -->
+    <section id="v-investigate" class="view">
+      <div class="inv">
+        <div class="pn toolbar">
+          <div class="casebar" id="scnCards"></div>
+          <div class="toolrow">
+            <div class="alertline" id="alertLine"></div>
+            <label class="chk"><input type="checkbox" id="critic" checked><span><b id="criticLabel"></b></span></label>
+            <div class="field"><span>Speed</span><select id="speed"><option value="slow">Slow</option><option value="normal" selected>Normal</option><option value="fast">Fast</option></select></div>
+            <div class="btns"><button id="run" class="primary">Run investigation</button><button id="pause" disabled>Pause</button><button id="reset">Reset</button></div>
+          </div>
+        </div>
+        <div class="invgrid">
+          <section class="pn stage">
+            <div class="pt">Plant overview</div>
+            <div class="proc" id="stepper"></div>
+            <div class="mapwrap"><div id="banner" class="banner"></div><svg id="map" viewBox="0 0 520 380" preserveAspectRatio="xMidYMid meet"></svg></div>
+            <div class="strip">
+              <div class="blk meter">
+                <div class="bt">Confidence of a malicious incident</div>
+                <div class="mrow"><div class="num" id="confNum">–</div>
+                  <div class="mcol"><div class="track"><div class="fill" id="confFill"></div><div class="sp"></div><div class="pm" id="confPrelim"></div></div>
+                    <div class="ticks"><span>0</span><span>0.2</span><span>0.4</span><span>0.6</span><span>0.8</span><span>1</span></div></div></div>
+                <div class="gnote" id="confNote">Setpoint 0.60. At or above it, the system declares an incident.</div>
+              </div>
+              <div class="blk"><div class="bt">Agents</div><div id="roster" class="roster"></div></div>
+            </div>
+          </section>
+          <aside class="pn feedcol">
+            <div class="pt"><span>Event journal</span><label class="notes"><input type="checkbox" id="notes" checked> Presenter notes</label></div>
+            <div id="feed" class="feed"></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── REPORT -->
+    <section id="v-report" class="view"><div class="page"><h1 class="ph">Incident report</h1><div id="reportBody"></div></div></section>
+
+    <!-- ───────────── COMPARE -->
+    <section id="v-compare" class="view"><div class="page">
+      <h1 class="ph">Compare: Critic off vs on</h1>
+      <p class="pl">Same events, same Blue Agent. The only difference is whether the Critic may challenge the verdict. Pick a case and run both.</p>
+      <div class="pn pbar"><label>Case <select id="cmpCase"></select></label><button class="primary" id="cmpRun">Run comparison</button></div>
+      <div id="cmpOut"></div>
+    </div></section>
+
+    <!-- ───────────── RED -->
+    <section id="v-red" class="view"><div class="page">
+      <h1 class="ph">Red Agent assessment</h1>
+      <p class="pl">The Red Agent inspects the plant's configuration and lists weak settings, the same kinds of weakness reported in the Dec 2025 Poland energy-sector attacks (CERT Polska, 2026). It is read-only: it can look, not change anything.</p>
+      <div class="pn pbar"><button class="primary" id="redRun">Run assessment</button></div>
+      <div id="redOut"></div>
+    </div></section>
+
+    <!-- ───────────── GATEWAY -->
+    <section id="v-gateway" class="view"><div class="page">
+      <h1 class="ph">Tool Gateway</h1>
+      <p class="pl">Agents never touch the plant directly. Every request passes this gateway, which checks the agent's allow-list and the sandbox scope, then writes it to an audit log. The rules are enforced in code, not left to the model's judgement.</p>
+      <h3 class="sh">Who may use which tool</h3>
+      <div id="gwMatrix"></div>
+      <h3 class="sh">Audit log</h3>
+      <div class="pn pbar"><button id="probeRun">Try forbidden actions</button><span class="hint">Fires four illegal requests (change a PLC, scan the internet, delete logs, Critic calling a tool). All four should be denied.</span></div>
+      <div id="gwAudit"></div>
+    </div></section>
+
+    <!-- ───────────── EVALUATION -->
+    <section id="v-eval" class="view"><div class="page">
+      <h1 class="ph">Evaluation</h1>
+      <p class="pl">All five cases under three systems: <b>A</b> a rule-based detector, <b>C</b> the agents without the Critic, <b>D</b> the full system with the Critic.</p>
+      <div class="pn pbar"><button class="primary" id="evalRun">Run evaluation</button></div>
+      <div id="evalOut"></div>
+    </div></section>
+
+  </main>
+</div>
+<script src="/static/app.js"></script>
+<script src="/static/tour.js"></script>
+</body>
+</html>
