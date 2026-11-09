@@ -1,0 +1,44 @@
+{
+ "when": "2026-11-09T22:55:26+05:30",
+ "command": "cyberarena bench --out results --cases results/cases --seeds 1 2 3 4 5 --systems A C D --hai external/hai-21.03",
+ "python": "3.12.10",
+ "platform": "Windows-11-10.0.26300-SP0",
+ "packages": {
+  "pyyaml": "6.0.3",
+  "matplotlib": "3.11.2",
+  "openpyxl": "3.1.5",
+  "fastapi": "0.162.2",
+  "sqlalchemy": "2.1.8",
+  "uvicorn": "0.54.0"
+ },
+ "cyberarena": "0.1.0",
+ "seeds": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "systems": [
+  "A",
+  "C",
+  "D",
+  "D-maint",
+  "D-auth",
+  "D-scope"
+ ],
+ "llm": {
+  "mode": "off",
+  "model": null
+ },
+ "file_sha256": {
+  "range/families.py": "22295dbc5f8a2c033ee6a441a3f236ac5bad7b6821fc800c4f225ef9e1a7e038",
+  "core/evidence.py": "16a982e7675fdcd2c49c3c3586cc082064a1397536d9e7cd45986f06c7015ec9",
+  "core/investigate.py": "6bdfc0c35c058a84428ee878b82a723c1b6d27510e348ffc7b05b6729b538196",
+  "core/gateway.py": "ab5f9cbb6fda84a68be0afc7baeb78eaa35ea1d9a64e1e4539d303450aef312a",
+  "core/normalise.py": "bbe65737f468361a84ffeed59ad3159765278c916aaf82d559c58b2a26ae6d14",
+  "core/systems.py": "63608086feec58a11e603c1d636f3e008cdd52e937c2eef540662c226f77acc2"
+ },
+ "range_families_sha256": "22295dbc5f8a2c033ee6a441a3f236ac5bad7b6821fc800c4f225ef9e1a7e038",
+ "wall_seconds": 0.4
+}

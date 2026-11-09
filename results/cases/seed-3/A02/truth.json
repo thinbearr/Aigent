@@ -1,0 +1,26 @@
+{
+ "family": "A02",
+ "name": "Credentials file then script",
+ "attack": true,
+ "hard": false,
+ "description": "A credentials file is read and an unexpected script runs on the engineering host.",
+ "techniques": [
+  "T0853",
+  "T0859"
+ ],
+ "seed": 3,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 6
+}

@@ -1,0 +1,23 @@
+{
+ "family": "B09",
+ "name": "Scheduled network scan",
+ "attack": false,
+ "hard": false,
+ "description": "IT runs an inventory scan of the control subnet inside a ticketed window.",
+ "techniques": [],
+ "seed": 1,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 9
+}

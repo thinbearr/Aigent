@@ -1,0 +1,67 @@
+{
+ "file": "test1.csv.gz",
+ "sha256": "532de41bed372206941609d05b763958f59abecfd63c8c123649f823452e445e",
+ "rows": 43201,
+ "sensors": 79,
+ "train_rows": 2000,
+ "test_rows": 41201,
+ "attack_segments_in_test": 5,
+ "attack_rows_in_test": 629,
+ "results": [
+  {
+   "quantile": 1,
+   "threshold": 9.477571795801401,
+   "point_precision": 0.01527774404313716,
+   "point_recall": 1.0,
+   "point_f1": 0.030095693779904308,
+   "segments": 5,
+   "segments_detected": 5,
+   "false_alarm_episodes": 6,
+   "false_alarms_per_hour": 0.5403782647853498
+  },
+  {
+   "quantile": 2,
+   "threshold": 18.955143591602802,
+   "point_precision": 0.015305253424824196,
+   "point_recall": 1.0,
+   "point_f1": 0.03014906772755596,
+   "segments": 5,
+   "segments_detected": 5,
+   "false_alarm_episodes": 5,
+   "false_alarms_per_hour": 0.4503152206544581
+  },
+  {
+   "quantile": 5,
+   "threshold": 47.38785897900701,
+   "point_precision": 0.01357940416402555,
+   "point_recall": 0.8855325914149443,
+   "point_f1": 0.026748625351165747,
+   "segments": 5,
+   "segments_detected": 5,
+   "false_alarm_episodes": 5,
+   "false_alarms_per_hour": 0.4503152206544581
+  },
+  {
+   "quantile": 10,
+   "threshold": 94.77571795801401,
+   "point_precision": 0.01273698850742991,
+   "point_recall": 0.8298887122416534,
+   "point_f1": 0.025088916658656157,
+   "segments": 5,
+   "segments_detected": 5,
+   "false_alarm_episodes": 5,
+   "false_alarms_per_hour": 0.4503152206544581
+  },
+  {
+   "quantile": 20,
+   "threshold": 189.55143591602803,
+   "point_precision": 0.011894585154971545,
+   "point_recall": 0.7742448330683624,
+   "point_f1": 0.023429231213316654,
+   "segments": 5,
+   "segments_detected": 5,
+   "false_alarm_episodes": 5,
+   "false_alarms_per_hour": 0.4503152206544581
+  }
+ ]
+}

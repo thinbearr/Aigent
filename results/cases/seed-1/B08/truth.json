@@ -1,0 +1,23 @@
+{
+ "family": "B08",
+ "name": "Engineer program backup",
+ "attack": false,
+ "hard": false,
+ "description": "An engineer reads the controller program for a backup. No ticket needed for a read.",
+ "techniques": [],
+ "seed": 1,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 8
+}

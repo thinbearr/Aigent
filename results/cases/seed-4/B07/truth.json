@@ -1,0 +1,23 @@
+{
+ "family": "B07",
+ "name": "Second ticket is the valid one",
+ "attack": false,
+ "hard": true,
+ "description": "Two tickets exist for the PLC; the engineer acts under the one assigned to them.",
+ "techniques": [],
+ "seed": 4,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 14
+}

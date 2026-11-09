@@ -1,0 +1,23 @@
+{
+ "family": "B03",
+ "name": "Approved logic change",
+ "attack": false,
+ "hard": true,
+ "description": "A logic ticket approves HEATER_GAIN<=g; the engineer downloads exactly that.",
+ "techniques": [],
+ "seed": 5,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 12
+}

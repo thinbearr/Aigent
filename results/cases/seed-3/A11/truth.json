@@ -1,0 +1,25 @@
+{
+ "family": "A11",
+ "name": "Expired ticket",
+ "attack": true,
+ "hard": true,
+ "description": "The engineer's ticket window closed hours ago; the same change is made now.",
+ "techniques": [
+  "T0836"
+ ],
+ "seed": 3,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 11
+}

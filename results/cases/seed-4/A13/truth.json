@@ -1,0 +1,26 @@
+{
+ "family": "A13",
+ "name": "MFA login without a ticket",
+ "attack": true,
+ "hard": true,
+ "description": "The vendor session passes MFA (stolen phone) but there is no work order; the program is read and replaced.",
+ "techniques": [
+  "T0859",
+  "T0889"
+ ],
+ "seed": 4,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 14
+}

@@ -1,0 +1,3 @@
+ticket,asset,assigned_to,requested_by,approved_by,start,end,change_type,status,description,approved_values
+80004410,plc-01,s.iyer,k.desai,r.mehta,2026-11-06T12:49:37.521199+00:00,2026-11-06T14:49:37.521199+00:00,parameter,closed,Heater element replaced; verify temperature setpoint loop,temp_sp=72
+80004412,plc-01,vendor.svc,k.desai,r.mehta,2026-11-09T14:44:38.679417+00:00,2026-11-09T16:49:38.679417+00:00,none,approved,Warranty diagnostics on PLC-1,

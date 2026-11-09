@@ -1,0 +1,174 @@
+# EXAMPLE site config (the simulated Kaveri range). Copy it and replace assets, roles, accounts and limits with your plant's.
+name: Kaveri Process Industries - Line 2 (simulated range)
+zones:
+- DMZ
+- IT
+- OT
+- Control
+- Process
+internal_cidrs:
+- 10.0.0.0/8
+assets:
+- id: erp-01
+  zone: IT
+  role: ERP application server
+  ip: 10.40.0.10
+- id: portal-01
+  zone: DMZ
+  role: Remote access gateway (vendor VPN portal)
+  ip: 10.40.0.5
+- id: files-01
+  zone: IT
+  role: Corporate file share
+  ip: 10.40.0.20
+- id: corp-ws-01
+  zone: IT
+  role: Office workstation (planning)
+  ip: 10.40.1.11
+- id: corp-ws-02
+  zone: IT
+  role: Office workstation (maintenance office)
+  ip: 10.40.1.12
+- id: historian-01
+  zone: OT
+  role: 'Process historian (dual-homed: also 10.40.0.30)'
+  ip: 10.30.0.10
+  extra_ips:
+  - 10.40.0.30
+- id: mes-01
+  zone: OT
+  role: Manufacturing execution system
+  ip: 10.30.0.15
+- id: eng-ws-01
+  zone: OT
+  role: Engineering workstation
+  ip: 10.30.0.21
+- id: fw-01
+  zone: OT
+  role: "IT/OT boundary firewall (L4 \u2194 L3)"
+  ip: 10.35.0.1
+- id: fw-02
+  zone: OT
+  role: "Control-zone firewall (L3 \u2194 L2/L1)"
+  ip: 10.25.0.1
+- id: hmi-01
+  zone: OT
+  role: SCADA / HMI server
+  ip: 10.20.0.10
+- id: plc-01
+  zone: Control
+  role: PLC-1 mixing tank + conveyor (Modbus/TCP unit 1)
+  ip: 10.10.0.11
+- id: sis-01
+  zone: Control
+  role: Safety instrumented system (Modbus/TCP unit 2)
+  ip: 10.10.0.12
+- id: process
+  zone: Process
+  role: Heated mixing tank, feed pump, bottling conveyor
+remote_gateways:
+- portal-01
+trusted_sources:
+- hmi-01
+process_assets:
+- process
+ticket_roles:
+- vendor
+asset_aliases:
+  portal-01:
+  - portal-01
+  - eng-ws-01
+  - plc-01
+  eng-ws-01:
+  - eng-ws-01
+  - portal-01
+  - plc-01
+roles:
+  admin:
+  - erp-01
+  - files-01
+  - corp-ws-01
+  - corp-ws-02
+  - portal-01
+  - historian-01
+  - mes-01
+  planner:
+  - erp-01
+  - files-01
+  - corp-ws-01
+  - mes-01
+  supervisor:
+  - erp-01
+  - files-01
+  - corp-ws-02
+  - hmi-01
+  - mes-01
+  engineer:
+  - eng-ws-01
+  - plc-01
+  - sis-01
+  - hmi-01
+  - mes-01
+  - historian-01
+  - erp-01
+  - files-01
+  operator:
+  - hmi-01
+  - plc-01
+  maintenance:
+  - hmi-01
+  - corp-ws-02
+  - erp-01
+  - files-01
+  vendor:
+  - portal-01
+  - eng-ws-01
+  viewer:
+  - corp-ws-01
+  - files-01
+  local: []
+accounts:
+  admin:
+    role: admin
+    default: true
+  historian.local:
+    role: local
+    default: true
+  operator:
+    role: operator
+    shared: true
+  vendor.svc:
+    role: vendor
+  eng.svc:
+    role: engineer
+  a.kulkarni:
+    role: planner
+  r.mehta:
+    role: supervisor
+  s.iyer:
+    role: engineer
+  p.nair:
+    role: operator
+  k.desai:
+    role: maintenance
+  m.rao:
+    role: admin
+limits:
+  temp_sp:
+  - 40
+  - 85
+  conveyor_sp:
+  - 0
+  - 1.4
+  pump_speed_sp:
+  - 0
+  - 100
+routine:
+  sources:
+  - hmi-01
+  operators:
+  - p.nair
+  max_delta: 1.0
+sensitive_files:
+- project_config.ini
+- handover

@@ -1,0 +1,25 @@
+{
+ "family": "A12",
+ "name": "Ticket for the wrong asset",
+ "attack": true,
+ "hard": true,
+ "description": "The engineer holds a ticket for the PLC but sets the safety bypass over the network.",
+ "techniques": [
+  "T0880"
+ ],
+ "seed": 2,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 11
+}

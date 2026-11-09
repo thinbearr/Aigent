@@ -1,0 +1,33 @@
+# UNTESTED: Docker is not installed on the machine this project was developed on, so nothing in this file has been run.
+# The pure-Python range (no Docker) is the tested path:  cyberarena range serve
+#
+#   docker compose up --build range                      # the simulated range
+#   docker compose --profile openplc up --build          # range + an OpenPLC runtime (experimental, see docs/OPENPLC.md)
+#   docker compose run --rm triage                       # triage the example logs
+services:
+  range:
+    build: .
+    command: ["range", "serve", "--host", "0.0.0.0"]
+    environment:
+      CYBERARENA_RANGE_DB: /data/range.db
+      PLC_BACKEND: ${PLC_BACKEND:-builtin}      # set to "openplc" together with the openplc profile
+      OPENPLC_HOST: openplc
+      OPENPLC_PORT: "502"
+    volumes: ["range-data:/data"]
+    ports: ["8000:8000", "8100:8100", "5020:5020"]
+
+  triage:
+    build: .
+    profiles: ["tools"]
+    command: ["triage", "--events", "/data/events.csv", "--tickets", "/data/tickets.csv", "--site", "/app/config/site.example.yaml", "--out", "/out"]
+    volumes: ["./examples:/data:ro", "./out:/out"]
+
+  # Experimental: a real IEC 61131-3 runtime for the controller. NOT TESTED. The image name below is a placeholder
+  # you must set yourself (OPENPLC_IMAGE) after checking the OpenPLC project's current Docker instructions.
+  openplc:
+    image: ${OPENPLC_IMAGE:?set OPENPLC_IMAGE to an OpenPLC runtime image}
+    profiles: ["openplc"]
+    ports: ["8080:8080"]          # OpenPLC web UI: upload plc/MixTankControl.st, start the runtime
+
+volumes:
+  range-data:

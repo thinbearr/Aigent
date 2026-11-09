@@ -1,0 +1,3 @@
+ticket,asset,assigned_to,requested_by,approved_by,start,end,change_type,status,description,approved_values
+80004410,plc-01,s.iyer,k.desai,r.mehta,2026-11-06T12:46:43.940643+00:00,2026-11-06T14:46:43.940643+00:00,parameter,closed,Heater element replaced; verify temperature setpoint loop,temp_sp=72
+80004412,plc-01,s.iyer,s.iyer,r.mehta,2026-11-09T14:41:45.025165+00:00,2026-11-09T15:46:45.025165+00:00,logic,approved,Retune heater gain,HEATER_GAIN=0.07

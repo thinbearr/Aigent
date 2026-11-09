@@ -1,0 +1,23 @@
+{
+ "family": "B05",
+ "name": "Authorised safety bypass",
+ "attack": false,
+ "hard": true,
+ "description": "An engineer sets and clears the SIS bypass with the key switch under a safety ticket.",
+ "techniques": [],
+ "seed": 4,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 12
+}

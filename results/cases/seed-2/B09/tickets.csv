@@ -1,0 +1,3 @@
+ticket,asset,assigned_to,requested_by,approved_by,start,end,change_type,status,description,approved_values
+80004410,plc-01,s.iyer,k.desai,r.mehta,2026-11-06T12:47:44.871956+00:00,2026-11-06T14:47:44.871956+00:00,parameter,closed,Heater element replaced; verify temperature setpoint loop,temp_sp=72
+80004412,fw-02,m.rao,m.rao,r.mehta,2026-11-09T14:42:46.001075+00:00,2026-11-09T16:17:46.001075+00:00,none,approved,Quarterly asset inventory scan,

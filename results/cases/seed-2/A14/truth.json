@@ -1,0 +1,26 @@
+{
+ "family": "A14",
+ "name": "Recon and credential guessing",
+ "attack": true,
+ "hard": false,
+ "description": "An external scan followed by failed logins. Nothing succeeds: an attempt.",
+ "techniques": [
+  "T0846",
+  "T0859"
+ ],
+ "seed": 2,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 15
+}

@@ -1,0 +1,23 @@
+{
+ "family": "B13",
+ "name": "Work-order approvals only",
+ "attack": false,
+ "hard": false,
+ "description": "A supervisor approves tickets; nothing touches the plant.",
+ "techniques": [],
+ "seed": 2,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 8
+}

@@ -1,0 +1,25 @@
+{
+ "family": "A03",
+ "name": "Historian pivot",
+ "attack": true,
+ "hard": false,
+ "description": "Office-side default login on the dual-homed historian, then control-subnet enumeration.",
+ "techniques": [
+  "T0840"
+ ],
+ "seed": 1,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 13
+}

@@ -1,0 +1,25 @@
+{
+ "family": "A08",
+ "name": "Change beyond the approved value",
+ "attack": true,
+ "hard": true,
+ "description": "An authorised engineer with a valid ticket for temp_sp<=T writes a value above T (sometimes still inside engineering limits).",
+ "techniques": [
+  "T0836"
+ ],
+ "seed": 5,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 11
+}

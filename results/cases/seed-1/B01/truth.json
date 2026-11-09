@@ -1,0 +1,23 @@
+{
+ "family": "B01",
+ "name": "Approved setpoint change",
+ "attack": false,
+ "hard": true,
+ "description": "An engineer changes temp_sp within an approved ticket (looks like A08/A09 to a rule).",
+ "techniques": [],
+ "seed": 1,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 11
+}

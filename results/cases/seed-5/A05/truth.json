@@ -1,0 +1,27 @@
+{
+ "family": "A05",
+ "name": "Lateral movement chain",
+ "attack": true,
+ "hard": false,
+ "description": "Remote login, historian pivot, then a control-network write from the historian.",
+ "techniques": [
+  "T0859",
+  "T0886",
+  "T0831"
+ ],
+ "seed": 5,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 16
+}

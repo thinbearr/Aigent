@@ -1,0 +1,25 @@
+{
+ "family": "A15",
+ "name": "Blocked logic download (hardened)",
+ "attack": true,
+ "hard": true,
+ "description": "The PLC refuses an unapproved download: an attempt that was stopped.",
+ "techniques": [
+  "T0889"
+ ],
+ "seed": 1,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "patched",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 6
+}

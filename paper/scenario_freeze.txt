@@ -1,0 +1,36 @@
+SCENARIO AND MODEL FREEZE
+recorded: 2026-11-09T20:09:00+05:30
+State at the time: the 32 scenario families have been written and only checked to RUN (a smoke generation, seed 1, 32 cases, no verdicts computed).
+No system (A,B,C,D,E) has yet been run on any of these cases.
+Disclosure: the evidence weights and Critic logic were first written and hand-tuned in CyberArena-Final on 14 earlier scenarios (S1-S13, 6c) whose results the authors saw.
+Families A08-A16 and B05-B16 are new since then; several are variants of those earlier scenarios (A04, A06, B01, B03...). No weight has been changed since that tuning, except the ticket-slack rule in core/tickets.py (24h -> 0h) made while porting, before any run here.
+
+22295dbc5f8a2c033ee6a441a3f236ac5bad7b6821fc800c4f225ef9e1a7e038  src/cyberarena/range/families.py
+16a982e7675fdcd2c49c3c3586cc082064a1397536d9e7cd45986f06c7015ec9  src/cyberarena/core/evidence.py
+3b41625ac6feadfd628356898d64e107760133e07a2958436e18f1bc07dc9505  src/cyberarena/core/investigate.py
+ab5f9cbb6fda84a68be0afc7baeb78eaa35ea1d9a64e1e4539d303450aef312a  src/cyberarena/core/gateway.py
+bbe65737f468361a84ffeed59ad3159765278c916aaf82d559c58b2a26ae6d14  src/cyberarena/core/normalise.py
+
+ADDENDUM 1 - 2026-11-09T20:11:21+05:30
+After the freeze above, and still before any benchmark number was recorded as a result, two things happened:
+(1) core/investigate.py gained an optional `disable` argument (Critic checks that can be switched off for ablation). Default is empty; behaviour with the default is unchanged.
+(2) A single-seed TRIAL run of the benchmark pipeline (seed 1, systems A, C, D and the ablations) was executed to check that the pipeline works. Its numbers were seen by the authors. No weight, rule, scenario or check was changed because of it.
+Hashes after (1):
+22295dbc5f8a2c033ee6a441a3f236ac5bad7b6821fc800c4f225ef9e1a7e038  src/cyberarena/range/families.py
+16a982e7675fdcd2c49c3c3586cc082064a1397536d9e7cd45986f06c7015ec9  src/cyberarena/core/evidence.py
+6bdfc0c35c058a84428ee878b82a723c1b6d27510e348ffc7b05b6729b538196  src/cyberarena/core/investigate.py
+ab5f9cbb6fda84a68be0afc7baeb78eaa35ea1d9a64e1e4539d303450aef312a  src/cyberarena/core/gateway.py
+bbe65737f468361a84ffeed59ad3159765278c916aaf82d559c58b2a26ae6d14  src/cyberarena/core/normalise.py
+
+ADDENDUM 2 - 2026-11-09T22:55:56+05:30
+Events after addendum 1:
+(a) A first full run (systems A,B,E,C,D) was ABANDONED after ~2.5 h: with an LLM configured, the agent systems (C, D and the ablations) made narration calls on every case. Narration cannot change a verdict, so it is now switched off while scoring (core/llm.py NARRATE flag, set by bench/runner.py). No result from that run was used.
+(b) The B and E baselines (single LLM) were therefore NOT run in the final results. Only A, C, D and the Critic ablations were; see docs/BENCHMARK.md.
+(c) bench/cli.py had a bug that skipped the HAI step when given a folder; fixed (tool bug, not a model change).
+(d) The final results (results/tables.md) were produced by the frozen code below. After seeing them the authors found two engine defects (docs/HANDOFF.md, 'Known defects'). They were NOT fixed, so the results match the freeze. Any fix must be recorded as a new version with before/after tables.
+Hashes of the code that produced results/ (should equal the addendum-1 hashes):
+22295dbc5f8a2c033ee6a441a3f236ac5bad7b6821fc800c4f225ef9e1a7e038  src/cyberarena/range/families.py
+16a982e7675fdcd2c49c3c3586cc082064a1397536d9e7cd45986f06c7015ec9  src/cyberarena/core/evidence.py
+6bdfc0c35c058a84428ee878b82a723c1b6d27510e348ffc7b05b6729b538196  src/cyberarena/core/investigate.py
+ab5f9cbb6fda84a68be0afc7baeb78eaa35ea1d9a64e1e4539d303450aef312a  src/cyberarena/core/gateway.py
+bbe65737f468361a84ffeed59ad3159765278c916aaf82d559c58b2a26ae6d14  src/cyberarena/core/normalise.py

@@ -1,0 +1,23 @@
+{
+ "family": "B11",
+ "name": "Operator typo then login",
+ "attack": false,
+ "hard": false,
+ "description": "Two failed logins from the HMI, then success.",
+ "techniques": [],
+ "seed": 4,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 8
+}

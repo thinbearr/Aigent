@@ -1,0 +1,26 @@
+{
+ "family": "A07",
+ "name": "SIS bypass over the network",
+ "attack": true,
+ "hard": false,
+ "description": "The safety bypass bit is set over Modbus, then the setpoint is pushed.",
+ "techniques": [
+  "T0880",
+  "T0831"
+ ],
+ "seed": 4,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 7
+}

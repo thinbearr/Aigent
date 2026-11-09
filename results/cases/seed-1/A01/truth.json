@@ -1,0 +1,26 @@
+{
+ "family": "A01",
+ "name": "Vendor login without MFA",
+ "attack": true,
+ "hard": false,
+ "description": "Reused vendor credentials open a remote session; sometimes preceded by a probe.",
+ "techniques": [
+  "T0886",
+  "T0859"
+ ],
+ "seed": 1,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 11
+}

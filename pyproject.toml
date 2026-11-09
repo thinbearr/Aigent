@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cyberarena"
+version = "0.1.0"
+description = "Read-only alert-triage assistant for industrial networks, with a simulated range and a reproducible benchmark."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "UNLICENSED - placeholder, decide a licence before publishing (see README)" }
+dependencies = ["pyyaml>=6"]
+
+[project.optional-dependencies]
+xlsx = ["openpyxl>=3.1"]
+bench = ["matplotlib>=3.8", "openpyxl>=3.1"]
+range = ["fastapi>=0.111", "uvicorn>=0.30", "sqlalchemy>=2.0", "pydantic>=2"]
+dev = ["pytest>=8"]
+all = ["cyberarena[xlsx,bench,range,dev]"]
+
+[project.scripts]
+cyberarena = "cyberarena.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+cyberarena = ["config/*.yaml", "range/kaveri/*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,7 @@
+ts,host,source,event_type,actor,src_ip,dst_ip,protocol,outcome,tag,old,new,method,path,process
+2026-03-02 09:00:10,erp-01,auth,login_success,a.kulkarni,10.40.1.11,,https,success,,,,corp,,
+2026-03-02 09:41:03,plc-01,plc,setpoint_change,s.iyer,10.30.0.21,10.10.0.11,modbus/tcp,success,temp_sp,72,74,,,
+2026-03-02 14:05:00,portal-01,auth,login_success,vendor.svc,203.0.113.47,,https,success,,,,remote,,
+2026-03-02 14:05:20,eng-ws-01,host,remote_session_start,vendor.svc,10.40.0.5,,rdp,success,,,,,,
+2026-03-02 14:09:40,eng-ws-01,host,file_read,vendor.svc,10.30.0.21,,ssh,success,,,,,/Projects/Line2_MixTank/project_config.ini,
+2026-03-02 14:12:00,plc-01,plc,setpoint_change,vendor.svc,203.0.113.47,10.10.0.11,modbus/tcp,success,temp_sp,74,93,,,

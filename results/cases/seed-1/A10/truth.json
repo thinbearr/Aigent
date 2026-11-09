@@ -1,0 +1,25 @@
+{
+ "family": "A10",
+ "name": "Logic change beyond the ticket",
+ "attack": true,
+ "hard": true,
+ "description": "A logic ticket approves HEATER_GAIN<=0.07; the engineer downloads a much larger gain.",
+ "techniques": [
+  "T0889"
+ ],
+ "seed": 1,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 9
+}

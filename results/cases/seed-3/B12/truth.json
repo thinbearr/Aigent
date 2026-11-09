@@ -1,0 +1,23 @@
+{
+ "family": "B12",
+ "name": "Vendor logic change under a ticket",
+ "attack": false,
+ "hard": true,
+ "description": "A vendor with MFA and a logic ticket downloads a change within the approved gain.",
+ "techniques": [],
+ "seed": 3,
+ "flags": {
+  "B1": "vulnerable",
+  "B2": "vulnerable",
+  "B3": "vulnerable",
+  "B4": "vulnerable",
+  "B5": "vulnerable",
+  "B6": "vulnerable",
+  "B7": "vulnerable",
+  "B8": "vulnerable",
+  "B9": "vulnerable",
+  "B10": "vulnerable",
+  "B11": "vulnerable"
+ },
+ "events": 13
+}
