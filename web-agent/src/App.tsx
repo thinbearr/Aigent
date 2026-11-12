@@ -286,6 +286,86 @@ function Flaws({ flaws }: { flaws: any[] }) {
   );
 }
 
+function RemediationPlaybook({ alert }: { alert: any }) {
+  const list: string[] = alert.checklist?.length ? alert.checklist : (alert.actions || []);
+  const [checked, setChecked] = useState<Record<number, boolean>>({});
+  const [operatorName, setOperatorName] = useState("");
+  const [signed, setSigned] = useState(false);
+
+  const toggle = (idx: number) => {
+    if (signed) return;
+    setChecked(prev => ({ ...prev, [idx]: !prev[idx] }));
+  };
+
+  const allDone = list.length > 0 && list.every((_: any, i: number) => checked[i]);
+
+  return (
+    <div className="card p-5 border-2" style={{ borderColor: alert.incident ? "#f43f6e40" : "#12b88640" }}>
+      <div className="flex items-center gap-2 mb-2">
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: alert.incident ? "#f43f6e" : "#12b886" }} />
+        <div className="label">Operator Mitigation Checklist · Physical Verification</div>
+        <span className="label ml-auto tabular-nums font-bold">
+          {Object.values(checked).filter(Boolean).length}/{list.length} done
+        </span>
+      </div>
+
+      <p className="text-xs text-sub mb-3">
+        Tailored to machine asset playbooks across Purdue L1-L4. Complete physical inspections before restoring operations.
+      </p>
+
+      <div className="space-y-2 mb-4 max-h-60 overflow-y-auto pr-1">
+        {list.map((step: string, idx: number) => (
+          <label key={idx} className="flex items-start gap-2.5 p-2 rounded-xl border border-line cursor-pointer hover:bg-slate-50 transition-colors">
+            <input
+              type="checkbox"
+              checked={!!checked[idx]}
+              onChange={() => toggle(idx)}
+              disabled={signed}
+              className="mt-1 h-4 w-4 rounded text-iris focus:ring-iris border-gray-300"
+            />
+            <span className={`text-xs flex-1 ${checked[idx] ? "line-through text-faint" : "text-ink"}`}>
+              {step}
+            </span>
+          </label>
+        ))}
+      </div>
+
+      <div className="pt-3 border-t border-line flex flex-wrap items-center gap-2">
+        <input
+          type="text"
+          placeholder="Operator / Shift Supervisor Name"
+          value={operatorName}
+          onChange={e => setOperatorName(e.target.value)}
+          disabled={signed}
+          className="text-xs px-2.5 py-1.5 rounded-lg border border-line bg-slate-50 text-ink focus:outline-none focus:border-iris flex-1 min-w-[170px]"
+        />
+        <button
+          onClick={() => setSigned(true)}
+          disabled={!allDone || !operatorName.trim() || signed}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition-all ${
+            signed
+              ? "bg-mint/20 text-mint cursor-default"
+              : allDone && operatorName.trim()
+              ? "bg-iris text-white hover:opacity-90"
+              : "bg-slate-100 text-faint cursor-not-allowed"
+          }`}
+        >
+          {signed ? "✓ Verified & Signed" : "Sign-Off & Clear Case"}
+        </button>
+      </div>
+
+      {signed && (
+        <div className="mt-2 text-[11px] text-mint font-medium animate-pop">
+          ✓ Signed off by {operatorName}. Containment protocol completed.
+        </div>
+      )}
+
+      <div className="label mt-3 mb-1">impact assessment</div>
+      <div className="text-xs text-sub">{alert.impact}</div>
+    </div>
+  );
+}
+
 function Report({ r, idx, setIdx, onAgain, critic, red }: any) {
   const a = r.alerts[idx];
   const incident = a.incident;
@@ -402,11 +482,7 @@ function Report({ r, idx, setIdx, onAgain, critic, red }: any) {
 
       {/* actions + audit */}
       <div className="grid lg:grid-cols-2 gap-5">
-        <div className="card p-5">
-          <div className="label mb-3">suggested actions · a human decides</div>
-          <ul className="space-y-2">{a.actions.map((ac: string, i: number) => <li key={i} className="text-sm flex gap-2"><span className="text-iris">→</span>{ac}</li>)}</ul>
-          <div className="label mt-4 mb-1">impact</div><div className="text-sm text-sub">{a.impact}</div>
-        </div>
+        <RemediationPlaybook alert={a} />
         <div className="card p-5">
           <div className="label mb-3">tool-call audit · all read-only</div>
           <div className="max-h-56 overflow-auto space-y-1">

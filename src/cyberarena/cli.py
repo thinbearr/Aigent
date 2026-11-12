@@ -64,6 +64,15 @@ def cmd_agent(a):
     return 1
 
 
+
+
+def cmd_ingest_docs(a):
+    from .ingest.cli import main as ingest_main
+    import sys
+    argv = ["--docs", str(a.docs), "--out", str(a.out)]
+    ingest_main(argv)
+    return 0
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="cyberarena", description="Read-only alert triage for industrial networks.")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -101,6 +110,12 @@ def main(argv=None):
     ag.add_argument("action", choices=["serve"])
     ag.add_argument("--port", type=int, default=8200)
     ag.set_defaults(fn=cmd_agent)
+
+
+    ing = sub.add_parser("ingest-docs", help="ingest SOP PDFs and write config/playbooks.yaml")
+    ing.add_argument("--docs", default="config/site-docs", help="directory with SOP PDFs")
+    ing.add_argument("--out", default="config/playbooks.yaml", help="output YAML path")
+    ing.set_defaults(fn=cmd_ingest_docs)
 
     v = sub.add_parser("version")
     v.set_defaults(fn=lambda a: print("cyberarena 0.1.0") or 0)

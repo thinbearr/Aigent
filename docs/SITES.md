@@ -60,4 +60,15 @@ Four containers on one network: `plant-api`, `agent-api` (with `PLANT_URL=http:/
 3. Compare the verdict with what you actually set — the agent was never told.
 
 The agent backend's own API: `GET /agent/health`, `GET /agent/plant` (is the plant reachable +
-what it sees), `POST /agent/investigate {critic, since_id}`.
+what it sees), `POST /agent/investigate {critic, since_id}`, `POST /agent/redteam`.
+
+## Agent-facing plant endpoints consumed by the agent
+
+| Endpoint | Used by | Notes |
+|---|---|---|
+| `GET /evidence/events?since_id=&limit=` | Blue / Forensics / Critic | Paginated; agent loops until page < 2000 |
+| `GET /evidence/tickets` | Critic | Change-ticket records for authorisation + scope checks |
+| `GET /evidence/sources` | `GET /agent/plant` health check | Event counts by source |
+| `GET /evidence/health` | `GET /agent/plant` health check | Live process state |
+| `GET /attack/techniques` | Red agent | Lists all exploitable techniques |
+| `POST /attack/attempt {"technique": id}` | Red agent | Attempts one technique; returns success/blocked/failed |

@@ -44,7 +44,10 @@ def investigate(since_id: int = 0, critic: bool = True) -> dict:
     from . import flaw_finder
 
     events = plant_client.fetch_events(since_id)
-    tickets_raw = plant_client.fetch_tickets()
+    try:
+        tickets_raw = plant_client.fetch_tickets()
+    except Exception:
+        tickets_raw = []
     flaws = flaw_finder.identify(events)
 
     with tempfile.TemporaryDirectory() as d:
@@ -69,7 +72,7 @@ def investigate(since_id: int = 0, critic: bool = True) -> dict:
                 alternatives=[dict(id=a["id"], label=a["name"], outcome=a["outcome"]) for a in r["alternatives"]],
                 timeline=[dict(t=tl["t"], asset=tl["asset"], text=tl["text"], evidence=tl["evidence"]) for tl in r["timeline"]],
                 mitre=[dict(id=m["id"], name=m["name"], evidence=m.get("evidence", [])) for m in r["mitre"]],
-                impact=r["impact"], actions=r["actions"],
+                impact=r["impact"], actions=r["actions"], checklist=r.get("checklist", []),
                 steps=[dict(n=st["n"], agent=st["agent"], kind=st["kind"], text=st["text"], why=st.get("why")) for st in run.steps],
                 audit=[dict(n=a["n"], agent=a["agent"], tool=a["tool"], status=a["status"], summary=a["summary"]) for a in run.gw.audit],
             ))

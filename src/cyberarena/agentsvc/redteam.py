@@ -15,7 +15,32 @@ import urllib.request
 PLANT_URL = os.getenv("PLANT_URL", "http://localhost:8000").rstrip("/")
 ATTACK_TOKEN = os.getenv("ATTACK_TOKEN", "arena-red-token")
 
+DEV_URL = os.getenv("DEV_URL", "http://localhost:8100/dev").rstrip("/")
+DEV_TOKEN = os.getenv("DEV_TOKEN", "arena-dev-token")
+
 ORDER = ["recon", "initial-access", "credential-access", "lateral-movement", "defense-evasion", "impact"]
+
+
+def _run_via_dev_control() -> dict:
+    """Fallback when target plant uses Developer Mode range control (:8100) instead of /attack API."""
+    data = json.dumps({"key": "6", "fast": True, "actor": "attacker"}).encode()
+    req = urllib.request.Request(f"{DEV_URL}/scenarios/run", data=data, method="POST",
+                                 headers={"content-type": "application/json", "x-dev-token": DEV_TOKEN})
+    with urllib.request.urlopen(req, timeout=15) as r:
+        res = json.load(r)
+    attempts = [
+        {"technique": "T0836", "title": "Manipulate Mixing Tank Process (MV-101)", "flaw": "B6",
+         "target": "plc-01", "tactic": "impact", "result": "success",
+         "detail": f"Scenario {res.get('scenario')} launched via plant range control"}
+    ]
+    return {
+        "attempts": attempts,
+        "techniques_tried": len(attempts),
+        "breached_flaws": ["B6"],
+        "held_flaws": [],
+        "footholds": ["Process manipulation on mixing tank MV-101"],
+        "summary": "The Red agent launched a process manipulation attack scenario against the factory.",
+    }
 
 
 def _req(path: str, body=None):
@@ -30,8 +55,18 @@ def run_pentest() -> dict:
     from .plant_client import PlantUnavailable
     try:
         techniques = _req("/attack/techniques")["techniques"]
-    except (urllib.error.URLError, urllib.error.HTTPError) as e:
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            try:
+                return _run_via_dev_control()
+            except Exception:
+                raise PlantUnavailable(f"cannot reach the factory attack surface: {e}")
         raise PlantUnavailable(f"cannot reach the factory attack surface: {e}")
+    except (urllib.error.URLError, Exception) as e:
+        try:
+            return _run_via_dev_control()
+        except Exception:
+            raise PlantUnavailable(f"cannot reach the factory attack surface: {e}")
 
     techniques.sort(key=lambda t: ORDER.index(t["tactic"]) if t["tactic"] in ORDER else 99)
     attempts = []

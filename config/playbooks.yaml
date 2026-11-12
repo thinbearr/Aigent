@@ -1,0 +1,53 @@
+# Curated and Audited Industrial Mitigation Playbooks
+# Generated for: Kaveri Process Industries (Line 2 & Line 3)
+# Standards: ISA/IEC 62443-3-3, NIST SP 800-82 Rev 3, CISA ICS-CERT
+
+source_docs:
+  - APPENDIX-A-SOP-Creamer-Mixing-Plan-STANDARD-OPERATING.pdf
+  - Tank_Mounted_Mixers_sop (2).pdf
+
+playbooks:
+  plc-01:
+    - "Dispatch Line Operator to physical PLC cabinet at mixing vessel MV-101."
+    - "Switch physical PLC key from REMOTE to LOCAL/STOP mode to immediately lock out remote network write commands."
+    - "[Tank Mounted Mixers SOP] Immediately press the STOP button on the local Start/Stop station to halt the agitator."
+    - "[Tank Mounted Mixers SOP] Rotate speed control potentiometer fully counterclockwise to lowest speed setting."
+    - "[Creamer Mixing Plan SOP] Emergency Action: Close manual shutoff valves on steam and solvent supply lines."
+    - "[Creamer Mixing Plan SOP] Ensure main discharge valve at bottom of mixer, premix tank, and blending tanks are sealed."
+    - "[Creamer Mixing Plan SOP] Close valves to cooling water circuit and verify cooling tower pump status."
+    - "Cross-reference physical temperature gauge (limit < 65°C) and pressure gauge against the signed Batch Record."
+    - "[Tank Mounted Mixers SOP] Verify mixing blade is fully submerged in product before permitting any manual jog or restart; never free-spin mixer."
+    - "Require Shift Supervisor physical inspection and signature in the site incident log before clearing alarms."
+
+  sis-01:
+    - "URGENT: Verify Safety Instrumented System (SIS) physical lockout key switch status in the HSE control panel."
+    - "Confirm hardwired emergency safety interlock circuits (overpressure and thermal trip) are armed and active."
+    - "[Creamer Mixing Plan SOP] Alert Shift Foreman and HSE Safety Officer immediately upon any safety system alert."
+    - "Physically inspect pressure relief valve PRV-101 and manual emergency dump valve EV-101-D for unobstructed venting."
+    - "Disconnect SIS network communication patch drop at patch panel PP-2 to isolate from remote network overrides."
+    - "Mandatory two-person sign-off (Shift Supervisor + HSE Officer) required in the safety logbook before bypass reset."
+
+  eng-ws-01:
+    - "Physically disconnect the engineering workstation Ethernet patch cable (rear panel OT-LAN drop)."
+    - "Terminate all active PLC programming sessions (TIA Portal / FactoryTalk Go Offline immediately)."
+    - "Revoke engineering domain credentials and invalidate temporary service tokens across Active Directory."
+    - "Inspect local USB ports for unauthorized storage or programming interfaces; preserve RAM for forensics."
+    - "Keep workstation quarantined with physical LOTO placard until forensic disk image is captured."
+
+  historian-01:
+    - "Sever historian data ingest ports at the Level 3 / Level 2 boundary firewall."
+    - "Compare real-time historian trend values against physical analog gauges on the plant floor."
+    - "Export and cryptographically hash the transaction audit log for all tag modifications in the incident window."
+    - "Reset service account credentials and force re-authentication for all collector instances."
+
+  portal-01:
+    - "Terminate all active remote VPN and vendor maintenance sessions immediately."
+    - "Revoke external user tokens and force multi-factor authentication re-verification."
+    - "Apply emergency firewall block rule on inbound remote management ports at boundary firewall fw-02."
+    - "Audit remote gateway access logs for unexpected external IP connections."
+
+  fw-02:
+    - "Roll back boundary firewall ruleset to signed golden baseline configuration."
+    - "Verify complete network isolation between Purdue Level 3 (Operations) and Level 1 (Process Control)."
+    - "Drop all unapproved dynamic routing and lateral pivot connections."
+    - "Export firewall rule change log to USB media for incident forensic review."

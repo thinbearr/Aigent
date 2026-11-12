@@ -40,7 +40,10 @@ def fetch_events(since_id: int = 0) -> list[dict]:
 
 
 def fetch_tickets() -> list[dict]:
-    return _get("/evidence/tickets").get("tickets", [])
+    try:
+        return _get("/evidence/tickets").get("tickets", [])
+    except PlantUnavailable:
+        return []
 
 
 def fetch_sources() -> dict:

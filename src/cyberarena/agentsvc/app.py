@@ -29,11 +29,16 @@ def plant_link():
     try:
         h = plant_client.plant_health()
         sources = plant_client.fetch_sources()
-        tickets = plant_client.fetch_tickets()
-        return {"connected": True, "plant_url": plant_client.PLANT_URL,
-                "event_count": h.get("event_count"), "by_source": sources, "tickets": len(tickets)}
     except plant_client.PlantUnavailable as e:
         return {"connected": False, "plant_url": plant_client.PLANT_URL, "error": str(e)}
+    # Tickets endpoint is optional — not all plant deployments expose it yet.
+    try:
+        tickets = plant_client.fetch_tickets()
+        ticket_count = len(tickets)
+    except plant_client.PlantUnavailable:
+        ticket_count = None
+    return {"connected": True, "plant_url": plant_client.PLANT_URL,
+            "event_count": h.get("event_count"), "by_source": sources, "tickets": ticket_count}
 
 
 @app.post("/agent/redteam")

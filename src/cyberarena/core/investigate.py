@@ -10,6 +10,36 @@ from . import llm
 from .evidence import MITRE, THRESHOLD, EvidenceBook, signal_for_event
 from .gateway import Gateway
 
+import os as _os
+import pathlib as _pathlib
+
+def _load_playbooks_yaml(yaml_path: str | None = None) -> dict:
+    """Load playbooks from YAML; return empty dict on any failure."""
+    path_str = yaml_path or _os.environ.get("PLAYBOOKS_YAML", "config/playbooks.yaml")
+    p = _pathlib.Path(path_str)
+    if not p.exists():
+        return {}
+    try:
+        import re as _re
+        raw = p.read_text(encoding="utf-8")
+        result: dict[str, list[str]] = {}
+        current: list[str] | None = None
+        for line in raw.splitlines():
+            # Match asset key line: "  plc-01:"
+            key_m = _re.match(r"^  ([\w\-]+):$", line)
+            if key_m:
+                current = []
+                result[key_m.group(1)] = current
+                continue
+            # Match step line:  '    - "some text"'
+            step_m = _re.match(r'^    - "(.+)"$', line)
+            if step_m and current is not None:
+                current.append(step_m.group(1).replace('\\"', '"'))
+        return {k: v for k, v in result.items() if v}
+    except Exception:
+        return {}
+
+
 PACE = dict(phase=0.15, evidence=0.35, hypothesis=0.5, graph=0.6, timeline=0.4)
 GENERIC_PRIORITY = ["auth", "network", "process", "file", "config", "scan", "process_state", "erp", "hmi", "other"]
 PRIORITY = {
@@ -270,6 +300,48 @@ ACTIONS = {
     "scan_activity": "Rate-limit and alert on probes of the remote access portal.",
 }
 
+TARGETED_PLAYBOOKS = {
+    "plc-01": [
+        "Dispatch Line 2 Operator to physical PLC cabinet at Line 2 mixing tank.",
+        "Inspect physical run key switch on PLC-1; change mode from REMOTE to STOP/PROGRAM.",
+        "Cross-reference holding registers (temp setpoint target 65C max, valve state) against manual piping diagram.",
+        "Reload validated factory firmware and golden ladder-logic from local offline backup media.",
+        "Keep mixing tank agitator in fail-safe manual jog until supervisor signs off clearance."
+    ],
+    "sis-01": [
+        "URGENT: Check local Safety Instrumented System (SIS) physical lockout key switch.",
+        "Confirm safety interlock circuits (high temperature / overpressure trip) are active and armed.",
+        "Visually verify mechanical pressure relief valve PRV-101 and cooling jacket dump bypass.",
+        "Require two-person sign-off (Shift Supervisor + Safety Engineer) before clearing alarm state."
+    ],
+    "eng-ws-01": [
+        "Disconnect network cable from engineering station (eng-ws-01) at OT switch port 4.",
+        "Terminate all active engineering software sessions and background Python scripts.",
+        "Check Windows event logs and project folder for modified config or credential dumps.",
+        "Quarantine host from L3 operations bus until full image verification."
+    ],
+    "historian-01": [
+        "Disconnect dual-homed secondary NIC facing IT/Office network.",
+        "Terminate external diagnostic sessions and reset the local historian administrator credential.",
+        "Restrict SQL and OPC-UA listener ports strictly to known MES and HMI IP addresses."
+    ],
+    "portal-01": [
+        "Immediately terminate active external VPN tunnel and remote sessions.",
+        "Invalidate all vendor service tokens and enable compulsory hardware token MFA.",
+        "Verify edge firewall rules blocking unsolicited inbound connections to L4 portal."
+    ],
+    "fw-02": [
+        "Access FW-02 console locally and disable rule 140 (temporary vendor bypass rule).",
+        "Verify strict L3 to L1 boundary: no direct Modbus (TCP/502) traffic permitted outside HMI-01."
+    ],
+}
+
+# Merge YAML playbooks on top of hardcoded dict (YAML takes precedence)
+_yaml_playbooks = _load_playbooks_yaml()
+if _yaml_playbooks:
+    TARGETED_PLAYBOOKS = {**TARGETED_PLAYBOOKS, **_yaml_playbooks}
+
+
 
 def build_report(run):
     book = run.book
@@ -287,6 +359,18 @@ def build_report(run):
     if incident:
         actions = [a for c, a in ACTIONS.items() if c in codes]
         actions.insert(0, f"Isolate affected assets: {', '.join(assets)}." if assets else "Isolate the affected assets.")
+        checklist = []
+        for asset_id in assets:
+            if asset_id in TARGETED_PLAYBOOKS:
+                for step in TARGETED_PLAYBOOKS[asset_id]:
+                    if step not in checklist:
+                        checklist.append(step)
+        if not checklist:
+            for c in codes:
+                if c in ACTIONS:
+                    checklist.append(f"Execute mitigation: {ACTIONS[c]}")
+            checklist.append("Conduct visual inspection of machinery status on local plant floor.")
+            checklist.append("Obtain signed approval from shift supervisor before restoring remote automation.")
         impact = []
         if "process_deviation" in codes:
             impact.append("process driven outside its alarm limit")
@@ -298,6 +382,7 @@ def build_report(run):
     else:
         actions = ["Close the alert as authorised activity and link it to the change ticket.",
                    "Tune the detection rule to suppress alerts that match a ticket and a maintenance window."]
+        checklist = ["Verify work order sign-off in maintenance logbook.", "Confirm operating telemetry returned to nominal state."]
         impact = "No impact beyond the planned change."
     fallback = (f"{'Incident confirmed' if incident else 'No incident'}: confidence {book.confidence:.2f}. "
                 f"{len(book.items)} evidence items across {len(assets)} assets; "
@@ -309,6 +394,7 @@ def build_report(run):
         incident=incident, confidence=round(book.confidence, 3), status="Awaiting human review", summary=summary,
         affected_assets=assets, attack_path=run.graph.get("path", []) if incident else [], timeline=run.timeline,
         evidence=book.items, mitre=mitre, alternatives=run.alt_outcomes, impact=impact, actions=actions,
+        checklist=checklist,
         critic_enabled=run.critic, tool_calls=run.tool_calls)
     run.verdict = incident
     run.phase("report")
