@@ -13,14 +13,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from . import runtime, seed, settings
 from .plant.modbus_server import serve as serve_modbus
-from .routers import auth_routes, dev, engineering, erp, evidence, plant_routes
+from .routers import attack, auth_routes, dev, engineering, erp, evidence, plant_routes
 
 CORS = dict(allow_origins=["*"], allow_methods=["*"], allow_headers=["*"], allow_credentials=False)
 
 plant_app = FastAPI(title="ArenaPlant - Kaveri Process Industries", version="1.0.0",
                     description="Simulated IT/OT manufacturing plant with configurable breach points.")
 plant_app.add_middleware(CORSMiddleware, **CORS)
-for r in (auth_routes.router, erp.router, plant_routes.router, engineering.router, evidence.router):
+for r in (auth_routes.router, erp.router, plant_routes.router, engineering.router, evidence.router, attack.router):
     plant_app.include_router(r)
 
 dev_app = FastAPI(title="ArenaPlant - Developer Mode", version="1.0.0",

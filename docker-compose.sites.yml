@@ -1,0 +1,52 @@
+# Two independent products that interact over the network, as four containers:
+#
+#   PLANT  (the simulation target, disposable)      AGENT (the product: autonomous investigation)
+#   ├─ plant-api   FastAPI  :8000 plant · :8100 dev   ├─ agent-api  FastAPI :8200  (pulls evidence from plant-api)
+#   └─ plant-web   nginx    :5191                      └─ agent-web  nginx   :5192
+#
+# The agent never shares the plant's database — it only reads the plant's HTTP
+# evidence API. Swap the plant for a real log/ticket source and the agent is unchanged.
+#
+#   docker compose -f docker-compose.sites.yml up --build
+#   Plant console:  http://localhost:5191     Agent console: http://localhost:5192
+services:
+  plant-api:
+    build: .
+    command: ["range", "serve", "--host", "0.0.0.0"]
+    environment:
+      CYBERARENA_RANGE_DB: /data/range.db
+      EVIDENCE_TOKEN: ${EVIDENCE_TOKEN:-arena-evidence-token}
+      DEV_TOKEN: ${DEV_TOKEN:-arena-dev-token}
+      ATTACK_TOKEN: ${ATTACK_TOKEN:-arena-red-token}
+    volumes: ["plant-data:/data"]
+    ports: ["8000:8000", "8100:8100", "5020:5020"]
+    networks: [arena]
+
+  agent-api:
+    build: .
+    command: ["agent", "serve"]
+    depends_on: [plant-api]
+    environment:
+      PLANT_URL: http://plant-api:8000          # talks to the plant over the network, not its DB
+      ATTACK_TOKEN: ${ATTACK_TOKEN:-arena-red-token}
+      EVIDENCE_TOKEN: ${EVIDENCE_TOKEN:-arena-evidence-token}
+    ports: ["8200:8200"]
+    networks: [arena]
+
+  plant-web:
+    build: ./web-plant
+    depends_on: [plant-api]
+    ports: ["5191:80"]
+    networks: [arena]
+
+  agent-web:
+    build: ./web-agent
+    depends_on: [agent-api]
+    ports: ["5192:80"]
+    networks: [arena]
+
+volumes:
+  plant-data:
+
+networks:
+  arena:

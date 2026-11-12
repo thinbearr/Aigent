@@ -53,6 +53,17 @@ def cmd_bench(a):
     return bcli.main(a)
 
 
+def cmd_agent(a):
+    if a.action == "serve":
+        from .agentsvc import app, plant_client
+        print(f"AGENT (investigation service) on :{a.port} · target plant: {plant_client.PLANT_URL}")
+        import os
+        os.environ["AGENT_PORT"] = str(a.port)
+        app.serve()
+        return 0
+    return 1
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="cyberarena", description="Read-only alert triage for industrial networks.")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -85,6 +96,11 @@ def main(argv=None):
     b.add_argument("--llm-seeds", type=int, nargs="*", help="restrict LLM systems (B, E) to these seeds (they are slow)")
     b.add_argument("--hai", help="folder with the extracted HAI file for the process-anomaly experiment")
     b.set_defaults(fn=cmd_bench)
+
+    ag = sub.add_parser("agent", help="the investigation-agent service (separate from the plant)")
+    ag.add_argument("action", choices=["serve"])
+    ag.add_argument("--port", type=int, default=8200)
+    ag.set_defaults(fn=cmd_agent)
 
     v = sub.add_parser("version")
     v.set_defaults(fn=lambda a: print("cyberarena 0.1.0") or 0)

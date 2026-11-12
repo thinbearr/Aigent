@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(900px 500px at 85% -5%, rgba(122,108,245,0.10), transparent 60%),
+    radial-gradient(700px 500px at -5% 10%, rgba(42,167,255,0.08), transparent 55%),
+    #fbfbfd;
+  color: #1a1a2e;
+  font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #dcdce6; border-radius: 8px; }
+
+@layer components {
+  .card { @apply bg-card rounded-2xl border border-line shadow-soft; }
+  .mono { font-family: "JetBrains Mono", monospace; }
+  .chip { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium; }
+  .pill { @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium border; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all
+           disabled:opacity-40 disabled:cursor-not-allowed; }
+  .btn-iris { @apply btn bg-iris text-white hover:bg-iris2 shadow-lift hover:shadow-glow; }
+  .btn-soft { @apply btn bg-white border border-line text-ink hover:border-iris/40; }
+  .label { @apply text-xs font-medium text-faint uppercase tracking-wide; }
+}
+.grad-text { background: linear-gradient(100deg,#5b5bf0,#7a6cf5 40%,#2aa7ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.skel { background: linear-gradient(90deg,#f0f0f6 25%,#e7e7f2 37%,#f0f0f6 63%); background-size: 400% 100%; }

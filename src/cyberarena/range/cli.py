@@ -20,7 +20,7 @@ def main(a):
 
         from .kaveri.main import dev_app, plant_app
         threading.Thread(target=lambda: uvicorn.run(dev_app, host=a.host, port=8100, log_level="warning"), daemon=True).start()
-        print(f"range: plant API on http://{a.host}:8000, Developer Mode API on :8100 (token arena-dev-token), Modbus/TCP on :5020")
+        print(f"PLANT (simulation) · plant API :8000 · Developer Mode API :8100 (token arena-dev-token) · Modbus/TCP :5020")
         uvicorn.run(plant_app, host=a.host, port=8000, log_level="warning")
         return 0
     return 1

@@ -18,6 +18,9 @@ DEV_TOKEN = os.getenv("DEV_TOKEN", "arena-dev-token")
 # Read-only evidence access for the Cyber-Arena agents.
 EVIDENCE_TOKEN = os.getenv("EVIDENCE_TOKEN", "arena-evidence-token")
 
+# The attackable surface the Red agent reaches. Models an attacker's network access.
+ATTACK_TOKEN = os.getenv("ATTACK_TOKEN", "arena-red-token")
+
 # Modbus/TCP server for PLC-1 (unit 1) and the SIS (unit 2).
 MODBUS_HOST = os.getenv("MODBUS_HOST", "0.0.0.0")
 MODBUS_PORT = int(os.getenv("MODBUS_PORT", "5020"))

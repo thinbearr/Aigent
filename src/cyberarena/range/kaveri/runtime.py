@@ -68,10 +68,9 @@ def organic_event():
             emit(source="erp", host="erp-01", event_type="production_order_released", actor="a.kulkarni", src_ip="10.40.1.11",
                  protocol="https", outcome="success", note="routine")
         else:
-            cur = plant.snapshot()["temp_sp"]
-            new = round(min(78, max(68, cur + random.choice([-0.5, 0.5]))), 1)
-            plant.write(1, "hr", 0, [int(new * 10)], {"src_ip": "10.20.0.10", "actor": "p.nair",
-                        "protocol": "modbus/tcp", "function_code": 6})
+            # routine historian poll of the controller — background work, no control change
+            emit(source="historian", host="historian-01", event_type="poll", actor=None, src_ip="10.30.0.10",
+                 dst_ip="10.10.0.11", protocol="modbus/tcp", outcome="info", note="scheduled 2s poll")
     except Exception:
         pass
 
@@ -94,7 +93,16 @@ def start():
     if _threads:
         return
     _stop.clear()
-    for fn in (_sim_loop, _historian_loop, _noise_loop):
+    # The factory runs normally: background staff activity (logins, alarm acks, report
+    # views, order releases, historian polls) is always on — it is responsible for
+    # nothing, it is just the plant working. The Red agent's exploits are the only
+    # malicious activity, mixed into this normal traffic for the Blue agent to find.
+    # Set NOISE=0 to silence the bots (clean room).
+    import os
+    loops = [_sim_loop, _historian_loop]
+    if os.getenv("NOISE", "1") == "1":
+        loops.append(_noise_loop)
+    for fn in loops:
         t = threading.Thread(target=fn, daemon=True, name=fn.__name__)
         t.start()
         _threads.append(t)

@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from .. import settings
 from ..db import get_db
 from ..events import to_dict
-from ..models import Event
+from ..models import Event, WorkOrder
 from ..topology import topology
 
 router = APIRouter(prefix="/evidence", tags=["evidence"])
@@ -53,6 +53,32 @@ def sources(db: Session = Depends(get_db), _: bool = Depends(evidence_auth)):
     from sqlalchemy import func
     rows = db.query(Event.source, func.count(Event.id)).group_by(Event.source).all()
     return {"sources": {s: n for s, n in rows}}
+
+
+@router.get("/tickets")
+def tickets(db: Session = Depends(get_db), _: bool = Depends(evidence_auth)):
+    """Change tickets / maintenance work orders a SOC analyst legitimately has access to.
+    This is authorisation context, not ground truth about any attack."""
+    import datetime as _dt
+
+    def iso(x):
+        if not x:
+            return None
+        return (x if x.tzinfo else x.replace(tzinfo=_dt.timezone.utc)).isoformat()
+
+    out = []
+    for t in db.query(WorkOrder).order_by(WorkOrder.id).all():
+        if not t.window_start:
+            continue
+        pc = t.planned_change or {}
+        key = pc.get("tag") or pc.get("parameter")
+        approved = f"{key}={pc['to']}" if key and isinstance(pc.get("to"), (int, float)) else ""
+        out.append({"ticket": t.number, "asset": t.asset, "assigned_to": t.assigned_to,
+                    "requested_by": t.requested_by, "approved_by": t.approved_by,
+                    "start": iso(t.window_start), "end": iso(t.window_end),
+                    "change_type": t.change_type, "status": t.status,
+                    "description": t.description, "approved_values": approved})
+    return {"tickets": out, "count": len(out)}
 
 
 @router.get("/topology")
