@@ -2,13 +2,13 @@ import React, { createContext, useCallback, useContext, useState } from "react";
 
 export function Chip({ tone, children }: { tone: string; children: React.ReactNode }) {
   const m: Record<string, string> = {
-    good: "bg-green-100 text-good", warn: "bg-orange-100 text-warn", bad: "bg-red-100 text-bad",
-    crit: "bg-purple-100 text-crit", info: "bg-blue-100 text-brand", neutral: "bg-gray-100 text-sub",
+    good: "bg-good/10 text-good", warn: "bg-warn/10 text-warn", bad: "bg-bad/10 text-bad",
+    crit: "bg-crit/10 text-crit", info: "bg-ink/5 text-ink", neutral: "bg-ink/[0.06] text-sub",
   };
-  return <span className={`chip ${m[tone] || m.neutral}`}>{children}</span>;
+  return <span className={`chip font-mono uppercase tracking-wider text-[10px] ${m[tone] || m.neutral}`}>{children}</span>;
 }
 export function Dot({ tone }: { tone: string }) {
-  const c: Record<string, string> = { good: "#107e3e", warn: "#e9730c", bad: "#bb0000", crit: "#6c2d91", info: "#0a6ed1", off: "#b0b4b8" };
+  const c: Record<string, string> = { good: "#2f6b4f", warn: "#b5703a", bad: "#a23b2e", crit: "#6c4a8f", info: "#1a1a1e", off: "#c3bcae" };
   return <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: c[tone] || c.off }} />;
 }
 const TC = createContext<(t: string, k?: "ok" | "err" | "info") => void>(() => {});
@@ -19,7 +19,7 @@ export function Toasts({ children }: { children: React.ReactNode }) {
   return <TC.Provider value={push}>{children}
     <div className="fixed bottom-4 right-4 z-50 space-y-2 w-80">
       {it.map(x => <div key={x.id} className="tile shadow-pop px-4 py-3 text-sm flex items-center gap-2 border-l-4"
-        style={{ borderColor: x.k === "err" ? "#bb0000" : x.k === "ok" ? "#107e3e" : "#0a6ed1" }}>
+        style={{ borderLeftColor: x.k === "err" ? "#a23b2e" : x.k === "ok" ? "#2f6b4f" : "#1a1a1e" }}>
         <Dot tone={x.k === "err" ? "bad" : x.k === "ok" ? "good" : "info"} />{x.t}</div>)}
     </div></TC.Provider>;
 }

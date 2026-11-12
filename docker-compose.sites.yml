@@ -26,6 +26,9 @@ services:
     build: .
     command: ["agent", "serve"]
     depends_on: [plant-api]
+    env_file:
+      - path: .env            # optional: supplies OPENAI_API_KEY for the GPT report
+        required: false
     environment:
       PLANT_URL: http://plant-api:8000          # talks to the plant over the network, not its DB
       ATTACK_TOKEN: ${ATTACK_TOKEN:-arena-red-token}

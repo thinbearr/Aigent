@@ -8,6 +8,9 @@ export const agent = {
   plant: () => req("/agent/plant"),
   redteam: () => req("/agent/redteam", { method: "POST", body: "{}" }),
   investigate: (critic: boolean, since_id = 0) => req("/agent/investigate", { method: "POST", body: JSON.stringify({ critic, since_id }) }),
+  report: () => req("/agent/report", { method: "POST", body: "{}" }),
+  connect: (url?: string) => req("/agent/connect", { method: "POST", body: JSON.stringify(url ? { url } : {}) }),
+  disconnect: () => req("/agent/disconnect", { method: "POST", body: "{}" }),
 };
 
 import { useCallback, useEffect, useRef, useState } from "react";

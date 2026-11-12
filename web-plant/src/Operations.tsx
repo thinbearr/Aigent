@@ -17,7 +17,11 @@ export default function Operations({ role }: { role: string }) {
   return (
     <div className="space-y-4">
       <div className="flex items-end justify-between">
-        <div><h1 className="text-xl font-semibold">Operations — Line 2</h1><p className="sub">SCADA / HMI supervisory control · Purdue L2</p></div>
+        <div>
+          <div className="eyebrow mb-2">Kaveri · Line 2 · Purdue L2</div>
+          <h1 className="display text-3xl md:text-4xl">Operations</h1>
+          <p className="sub mt-1.5">SCADA / HMI supervisory control</p>
+        </div>
         <div className="flex gap-2">
           <Chip tone={s.safety.sis_tripped ? "bad" : "good"}>{s.safety.sis_tripped ? "SIS TRIPPED" : "SIS Armed"}</Chip>
           <Chip tone="neutral">Logic v{s.program.version}</Chip>
@@ -29,9 +33,9 @@ export default function Operations({ role }: { role: string }) {
         {s.tags.map((t: any) => (
           <div key={t.key} className="tile p-4">
             <div className="flex items-center justify-between"><span className="sub">{t.label}</span><Dot tone={stateTone[t.state] || "good"} /></div>
-            <div className="objnum mt-2" style={{ color: t.state === "trip" ? "#bb0000" : t.state === "alarm" || t.state === "outside_normal" ? "#e9730c" : "#32363a" }}>
-              {t.value}<span className="text-sm font-normal text-sub ml-1">{t.unit}</span></div>
-            <div className="sub mt-1 font-mono text-[11px]">{t.tag} · nom {t.normal[0]}–{t.normal[1]}</div>
+            <div className="objnum mt-3" style={{ color: t.state === "trip" ? "#a23b2e" : t.state === "alarm" || t.state === "outside_normal" ? "#b5703a" : "#1a1a1e" }}>
+              {t.value}<span className="text-sm font-sans font-normal text-sub ml-1">{t.unit}</span></div>
+            <div className="sub mt-2 font-mono text-[11px]">{t.tag} · nom {t.normal[0]}–{t.normal[1]}</div>
           </div>
         ))}
       </div>

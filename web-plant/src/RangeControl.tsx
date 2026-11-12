@@ -19,8 +19,10 @@ export default function RangeControl() {
   return (
     <div className="space-y-4">
       <div className="flex items-end justify-between flex-wrap gap-2">
-        <div><h1 className="text-xl font-semibold">Range Control</h1>
-          <p className="sub">Configure the known conditions the plant is in — breach points, attack / maintenance scenarios, faults. This is what the investigation agent must discover.</p></div>
+        <div>
+          <div className="eyebrow mb-2">Developer Mode · Ground Truth</div>
+          <h1 className="display text-3xl md:text-4xl">Range Control</h1>
+          <p className="sub mt-1.5 max-w-xl">Configure the known conditions the plant is in — breach points, attack / maintenance scenarios, faults. This is what the investigation agent must discover.</p></div>
         <div className="flex items-center gap-4">
           <Metric k="Events" v={status.data?.event_count} /><Metric k="Cases" v={status.data?.case_count} />
           <Metric k="Process T" v={`${status.data?.process?.temperature ?? "–"}°C`} />

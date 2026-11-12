@@ -2,31 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light; }
+:root { color-scheme: dark; }
 html, body, #root { height: 100%; }
 body {
   margin: 0;
-  background:
-    radial-gradient(900px 500px at 85% -5%, rgba(122,108,245,0.10), transparent 60%),
-    radial-gradient(700px 500px at -5% 10%, rgba(42,167,255,0.08), transparent 55%),
-    #fbfbfd;
-  color: #1a1a2e;
+  background: #0b0b0c;
+  color: #f4f4f2;
   font-family: "Space Grotesk", Inter, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: #dcdce6; border-radius: 8px; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: #2a2a2d; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a3d; }
+::selection { background: #deebc8; color: #0b0b0c; }
 
 @layer components {
   .card { @apply bg-card rounded-2xl border border-line shadow-soft; }
   .mono { font-family: "JetBrains Mono", monospace; }
   .chip { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium; }
   .pill { @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium border; }
-  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all
-           disabled:opacity-40 disabled:cursor-not-allowed; }
-  .btn-iris { @apply btn bg-iris text-white hover:bg-iris2 shadow-lift hover:shadow-glow; }
-  .btn-soft { @apply btn bg-white border border-line text-ink hover:border-iris/40; }
-  .label { @apply text-xs font-medium text-faint uppercase tracking-wide; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all
+           disabled:opacity-30 disabled:cursor-not-allowed; }
+  .btn-iris { @apply btn bg-iris text-canvas hover:bg-iris2; }
+  .btn-soft { @apply btn bg-transparent border border-line text-ink hover:border-iris/60 hover:text-iris; }
+  /* Mono uppercase micro-label — the synchronized.studio signature */
+  .label { @apply font-mono text-[10px] font-medium text-faint uppercase tracking-[0.18em]; }
+  /* Huge, thin display type */
+  .display { @apply font-sans font-light tracking-[-0.02em] leading-[0.98]; }
 }
-.grad-text { background: linear-gradient(100deg,#5b5bf0,#7a6cf5 40%,#2aa7ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.skel { background: linear-gradient(90deg,#f0f0f6 25%,#e7e7f2 37%,#f0f0f6 63%); background-size: 400% 100%; }
+
+/* white → pale-green gradient text */
+.grad-text {
+  background: linear-gradient(100deg, #ffffff, #deebc8 90%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* ---- custom cursor ("the mouse thing") ---- */
+@media (hover: hover) and (pointer: fine) {
+  * { cursor: none !important; }
+  .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none; border-radius: 9999px; }
+  .cursor-dot { width: 6px; height: 6px; background: #deebc8; transform: translate(-50%, -50%); }
+  .cursor-ring {
+    width: 34px; height: 34px; border: 1px solid rgba(222,235,200,0.5);
+    transform: translate(-50%, -50%);
+    transition: width .18s ease, height .18s ease, background .18s ease, border-color .18s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring.hot { width: 56px; height: 56px; background: rgba(222,235,200,0.12); border-color: rgba(222,235,200,0.9); }
+}
+
+/* intro loader */
+.intro {
+  position: fixed; inset: 0; z-index: 10000; background: #0b0b0c;
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem;
+}
+.intro.gone { animation: fadeout .6s ease forwards; }

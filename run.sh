@@ -34,7 +34,9 @@ case "${1:-}" in
     ;;
   agent)
     kill_port 8200
-    echo "AGENT  · investigation http://localhost:8200 · target plant: $PLANT_URL"
+    # Load OPENAI_API_KEY (and anything else) from .env if present, so the GPT report works.
+    [ -f .env ] && set -a && . ./.env && set +a
+    echo "AGENT  · investigation http://localhost:8200 · target plant: $PLANT_URL · GPT report: $([ -n "${OPENAI_API_KEY:-}" ] && echo on || echo off)"
     ATTACK_TOKEN="${ATTACK_TOKEN:-arena-red-token}" PLANT_URL="$PLANT_URL" exec "$VENV/bin/cyberarena" agent serve
     ;;
   plant-ui) echo "Plant console  http://localhost:5191"; exec sh -c "cd web-plant && npm run dev" ;;

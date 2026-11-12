@@ -48,7 +48,6 @@ def investigate(since_id: int = 0, critic: bool = True) -> dict:
         tickets_raw = plant_client.fetch_tickets()
     except Exception:
         tickets_raw = []
-    flaws = flaw_finder.identify(events)
 
     with tempfile.TemporaryDirectory() as d:
         tmp = Path(d)
@@ -76,5 +75,11 @@ def investigate(since_id: int = 0, critic: bool = True) -> dict:
                 steps=[dict(n=st["n"], agent=st["agent"], kind=st["kind"], text=st["text"], why=st.get("why")) for st in run.steps],
                 audit=[dict(n=a["n"], agent=a["agent"], tool=a["tool"], status=a["status"], summary=a["summary"]) for a in run.gw.audit],
             ))
+        # Flaws are read only from THIS round's events, and the ambiguous standing weaknesses
+        # (default/shared logins) are reported only when the investigation actually concluded an
+        # incident — so Blue names the flaws that were exploited, not every flaw that exists.
+        incident_detected = any(a["incident"] for a in alerts)
+        flaws = flaw_finder.identify(events, incident=incident_detected, scoped=since_id > 0)
         return dict(evidence_examined=total, tickets_available=len(tickets_raw),
-                    triggered=len(windows), flaws=flaws, alerts=alerts)
+                    triggered=len(windows), incident=incident_detected,
+                    since_id=since_id, flaws=flaws, alerts=alerts)

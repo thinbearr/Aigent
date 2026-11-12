@@ -10,3 +10,7 @@ external/
 out/
 data/
 build/
+.env
+node_modules/
+dist/
+*.tsbuildinfo

@@ -1,12 +1,12 @@
 import React from "react";
 
 export const AGENTS: Record<string, { color: string; glyph: string; name: string }> = {
-  Orchestrator: { color: "#5b5bf0", glyph: "◈", name: "Orchestrator" },
-  Blue: { color: "#2aa7ff", glyph: "✦", name: "Blue · evidence" },
-  Critic: { color: "#f59f0a", glyph: "⟁", name: "Critic · challenge" },
-  Forensics: { color: "#12b886", glyph: "◆", name: "Forensics · timeline" },
-  System: { color: "#9a9aad", glyph: "•", name: "System" },
-  "Report writer": { color: "#7a6cf5", glyph: "✎", name: "Report" },
+  Orchestrator: { color: "#deebc8", glyph: "◈", name: "Orchestrator" },
+  Blue: { color: "#6bb6ff", glyph: "✦", name: "Blue · evidence" },
+  Critic: { color: "#f0b44a", glyph: "⟁", name: "Critic · challenge" },
+  Forensics: { color: "#5fd39a", glyph: "◆", name: "Forensics · timeline" },
+  System: { color: "#9a9a9c", glyph: "•", name: "System" },
+  "Report writer": { color: "#cbdfaa", glyph: "✎", name: "Report" },
 };
 
 export function Avatar({ agent, sm }: { agent: string; sm?: boolean }) {
@@ -23,11 +23,11 @@ export function Avatar({ agent, sm }: { agent: string; sm?: boolean }) {
 // radial confidence dial
 export function Dial({ value, incident }: { value: number; incident: boolean }) {
   const r = 52, c = 2 * Math.PI * r, pct = Math.max(0, Math.min(1, value));
-  const col = incident ? "#f43f6e" : "#12b886";
+  const col = incident ? "#f2537a" : "#5fd39a";
   return (
     <div className="relative w-[136px] h-[136px]">
       <svg viewBox="0 0 136 136" className="w-full h-full -rotate-90">
-        <circle cx="68" cy="68" r={r} fill="none" stroke="#eeeef4" strokeWidth="11" />
+        <circle cx="68" cy="68" r={r} fill="none" stroke="#272729" strokeWidth="11" />
         <circle cx="68" cy="68" r={r} fill="none" stroke={col} strokeWidth="11" strokeLinecap="round"
           strokeDasharray={c} strokeDashoffset={c * (1 - pct)} style={{ transition: "stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1)" }} />
       </svg>
@@ -44,9 +44,9 @@ export function Dial({ value, incident }: { value: number; incident: boolean }) 
 export function Chip({ tone, children }: { tone: string; children: React.ReactNode }) {
   const m: Record<string, string> = {
     iris: "bg-iris/10 text-iris", mint: "bg-mint/10 text-mint", amber: "bg-amber/10 text-amber",
-    rose: "bg-rose/10 text-rose", sky: "bg-sky/10 text-sky", slate: "bg-slate-100 text-sub",
+    rose: "bg-rose/10 text-rose", sky: "bg-sky/10 text-sky", slate: "bg-white/[0.07] text-sub",
   };
-  return <span className={`chip ${m[tone] || m.slate}`}>{children}</span>;
+  return <span className={`chip font-mono text-[10px] uppercase tracking-wider ${m[tone] || m.slate}`}>{children}</span>;
 }
 
 export function Weight({ w }: { w: number }) {

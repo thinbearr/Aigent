@@ -4,27 +4,34 @@ export default {
   theme: {
     extend: {
       colors: {
-        // SAP Fiori 3 palette
-        shell: "#354a5f",
-        shell2: "#2b3c4e",
-        bg: "#f5f6f7",
+        // Clinia-inspired editorial palette: warm paper, charcoal ink, warm-tan accent.
+        shell: "#1a1a1e",   // charcoal nav / dark panels
+        shell2: "#101013",
+        bg: "#f6f3ec",      // warm paper
         tile: "#ffffff",
-        line: "#e5e5e5",
-        line2: "#d9d9d9",
-        ink: "#32363a",
-        sub: "#6a6d70",
-        brand: "#0a6ed1",
-        brand2: "#0854a0",
-        good: "#107e3e",
-        warn: "#e9730c",
-        bad: "#bb0000",
-        crit: "#6c2d91",
-        info: "#0a6ed1",
+        line: "#ece7dd",    // warm hairline
+        line2: "#ddd6c9",
+        ink: "#1a1a1e",
+        sub: "#77726a",     // warm grey
+        brand: "#1a1a1e",   // primary action = charcoal (Clinia "book a demo" button)
+        brand2: "#000000",
+        accent: "#95795c",  // warm tan — eyebrow labels, highlights
+        accent2: "#b89b74",
+        cream: "#fcf8ef",
+        good: "#2f6b4f",
+        warn: "#b5703a",
+        bad: "#a23b2e",
+        crit: "#6c4a8f",
+        info: "#1a1a1e",
       },
-      fontFamily: { sans: ["'72'", "Inter", "Arial", "system-ui", "sans-serif"] },
+      fontFamily: {
+        sans: ["Manrope", "Inter", "system-ui", "sans-serif"],
+        serif: ["Fraunces", "Georgia", "serif"],
+        mono: ["'JetBrains Mono'", "ui-monospace", "monospace"],
+      },
       boxShadow: {
-        tile: "0 0 0 1px rgba(0,0,0,0.04), 0 1px 4px rgba(0,0,0,0.08)",
-        pop: "0 2px 10px rgba(0,0,0,0.15)",
+        tile: "0 1px 2px rgba(26,26,30,0.04), 0 1px 3px rgba(26,26,30,0.06)",
+        pop: "0 8px 30px rgba(26,26,30,0.16)",
       },
     },
   },
